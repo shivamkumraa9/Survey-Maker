@@ -1,0 +1,41 @@
+{% extends "accounts/base.html" %}
+{% block title %}
+Fill Survey
+{% endblock %}
+
+{% block content %}
+
+
+<div class="card" style="background-color: #F5F5F5;">
+  <div class="card-header text-center text-white" style="background-color: #343A40;">
+    <h1>{{ survey.heading }}</h1>
+  </div>
+    <div class="container mt-3 mb-2">
+        <form method="post">
+            {% csrf_token %}
+
+            {% for question in survey.question_set.all %}
+                <div class="card">
+                    <div class="card-header text-center"><h3>{{ question.text }}</h3></div>
+                    <div class="card-body">
+                    {% for answer in question.answer_set.all %}
+                        <li class="list-group-item">
+                            <div class="pl-2">
+                                <input type="radio"  class="form-check-input" required="true" value="{{ answer.text }}" name="{{ question.text }}" id="{{ answer.text }}">
+                                <label for="{{ answer.text }}">{{ answer.text }}</label>
+                            </div>
+
+                        </li>
+
+                    {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="text-center my-2">
+            <input type="submit" class="btn btn-dark btn-lg mt-1" value="Submit">
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

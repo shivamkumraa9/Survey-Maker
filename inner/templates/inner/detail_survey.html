@@ -1,0 +1,61 @@
+{% extends "accounts/base.html" %}
+{% load divi %}
+{% block title %}
+Survey Detail
+{% endblock %}
+{% block content %}
+
+<div class="card">
+  <div class="card-header text-white text-center" style="background-color: #343A40;">
+    <h2>{{ survey.heading }}</h2>
+  </div>
+  <div class="card-body">
+    <p class="card-text text-center">Total number of people participated = {{ survey.total_filled }}</p>
+    {% for question in survey.question_set.all %}
+
+    <ul class="list-group">
+      <li class="list-group-item text-center" style="border-color: #343A40;"><h3 >{{ question.text }} </h3> </li>
+      {% for choice in question.answer_set.all %}
+    <li class="list-group-item" style="border-color: #343A40;">{{ choice.text }}
+      <div class="progress">
+        <div class="progress-bar bg-dark" style="width:{{ survey.total_filled|divide:choice.votes }}%;" role="progressbar" aria-valuenow="{{ choice.votes }}" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+   </li>
+    {% endfor %}
+  </ul>
+  {% endfor %}
+
+<div class="text-center">
+  <button type="button" class="btn btn-danger mt-2" data-toggle="modal" data-target="#exampleModalCenter">
+      Delete Survey
+  </button>  
+</div>
+
+  </div>
+</div>
+
+
+
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Delete Survey Confirm</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete this survey ?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <a type="button" href="{% url 'inner:delete_survey' survey.id %} " class="btn btn-danger text-white">Delete</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+{% endblock %}

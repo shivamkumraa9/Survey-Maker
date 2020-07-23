@@ -1,0 +1,29 @@
+{% extends "accounts/base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+{% if surveys %}
+<div class="card text-center">
+  <div class="card-header text-white" style="background-color: #343A40;">
+    <h1>Recent Surveys</h1>
+  </div>
+  <div class="card-body">
+    <ul class="list-group">
+    {% for survey in surveys %}
+        <a class="list-group-item list-group-item-action" href="{% url 'inner:fill_survey' survey.pk %}">
+            <h3>
+               {{ survey.heading }}
+            </h3>
+        </a>
+    {% endfor %}
+    </ul>
+</div>
+</div>
+
+{% else %}
+    <h3>No Surveys</h3>
+{% endif %}
+{% endblock %}

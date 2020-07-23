@@ -1,0 +1,54 @@
+{% extends "accounts/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+Profile
+{% endblock %}
+{% block content %}
+
+
+<div class="card">
+  <div class="card-header text-center text-white" style="background-color: #343A40;">
+    <h1><strong>Your Surveys:</strong></h1>
+  </div>
+
+  <div class="card-body">
+      {% if surveys %}
+        <ul class="list-group">
+          {% for i in surveys %}
+              <a class="list-group-item list-group-item-action text-center" href="{% url 'inner:detail_survey' i.pk %}">{{ i.heading }}</a>
+          {% endfor %}  
+      {% else %}
+              <li class="list-group-item text-center">No Surveys Yet <a href="{% url 'inner:new_survey' %}">Create New !!</a></li>
+        </ul>
+      {% endif %}
+      <div class="mt-3">
+          <button type="button"  class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+              Delete Account
+          </button>
+          <a href="{% url 'password_change'%}" class="btn btn-success float-right">Change Password</a>        
+      </div>
+  </div>
+</div>  
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete Account Confirm</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete your account ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a type="button" href="{% url 'accounts:delete_acc' user.username %} " class="btn btn-danger text-white">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
