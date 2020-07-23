@@ -1,5 +1,4 @@
 {% extends "accounts/base.html" %}
-{% load divi %}
 {% block title %}
 Survey Detail
 {% endblock %}
@@ -16,10 +15,7 @@ Survey Detail
     <ul class="list-group">
       <li class="list-group-item text-center" style="border-color: #343A40;"><h3 >{{ question.text }} </h3> </li>
       {% for choice in question.answer_set.all %}
-    <li class="list-group-item" style="border-color: #343A40;">{{ choice.text }}
-      <div class="progress">
-        <div class="progress-bar bg-dark" style="width:{{ survey.total_filled|divide:choice.votes }}%;" role="progressbar" aria-valuenow="{{ choice.votes }}" aria-valuemin="0" aria-valuemax="100"></div>
-      </div>
+    <li class="list-group-item" style="border-color: #343A40;">{{ choice.text }} : {{ choice.votes }}
    </li>
     {% endfor %}
   </ul>
